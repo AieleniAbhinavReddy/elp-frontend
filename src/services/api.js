@@ -1,12 +1,11 @@
 import axios from 'axios';
 
-// --- THIS IS THE ONLY LINE THAT CHANGES ---
 // It now uses the deployment URL from Vercel, but falls back to localhost for local development.
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080';
 
-// Helper to get the token. We will use the key 'token'.
+// Helper to get the token.
 const getAuthHeader = () => {
-    const token = localStorage.getItem('token'); // <-- Use 'token' for consistency
+    const token = localStorage.getItem('token');
     return token ? { Authorization: `Bearer ${token}` } : {};
 };
 
@@ -23,14 +22,12 @@ export const apiFetchCurrentUser = () => {
     return axios.get(`${API_URL}/api/auth/me`, { headers: getAuthHeader() });
 };
 
-// --- PASSWORD RESET APIS (UPDATED FOR TOKEN FLOW) ---
+// --- PASSWORD RESET APIS ---
 export const apiForgotPassword = (username, securityAnswer) => {
-    // This now calls the correct, secure endpoint.
     return axios.post(`${API_URL}/api/auth/forgot-password`, { username, securityAnswer });
 };
 
 export const apiResetPassword = (token, newPassword) => {
-    // This now sends the token instead of the username.
     return axios.post(`${API_URL}/api/auth/reset-password`, { token, newPassword });
 };
 
@@ -40,12 +37,10 @@ export const apiGetCourses = () => {
 };
 
 export const apiGetCourseDetails = (courseId) => {
-    // No change needed here, getAuthHeader already sends the token
     return axios.get(`${API_URL}/api/courses/${courseId}`, { headers: getAuthHeader() });
 };
 
 export const apiGetMyCourses = () => {
-    // New function for the My Courses page
     return axios.get(`${API_URL}/api/registrations/my-courses`, { headers: getAuthHeader() });
 };
 
@@ -60,4 +55,9 @@ export const apiUnregisterFromCourse = (courseId) => {
 // --- CHATBOT APIS ---
 export const apiSendChatMessage = (formData) => {
     return axios.post(`${API_URL}/chatbot/send`, formData, { headers: getAuthHeader() });
+};
+
+// --- NEW COMPILER API ---
+export const apiRunCode = (compilerData) => {
+    return axios.post(`${API_URL}/api/compiler/run`, compilerData);
 };

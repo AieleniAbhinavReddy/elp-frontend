@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Editor from "@monaco-editor/react";
-import axios from "axios";
+// Import the new function from your api.js file
+import { apiRunCode } from "../services/api"; // Adjust path to api.js if necessary
 
 const CompilerPage = () => {
   const [language, setLanguage] = useState("python");
@@ -12,7 +13,6 @@ const CompilerPage = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // --- START: ADD NEW LANGUAGES HERE ---
   const languageOptions = [
     { value: "python", label: "Python" },
     { value: "javascript", label: "JavaScript" },
@@ -44,7 +44,6 @@ int main() {
     return 0;
 }`,
   };
-  // --- END: ADD NEW LANGUAGES HERE ---
 
   const handleLanguageChange = (e) => {
     const newLang = e.target.value;
@@ -57,14 +56,12 @@ int main() {
     setOutput("");
     setError("");
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/compiler/run",
-        {
-          language,
-          code,
-          input,
-        }
-      );
+      // Use the centralized apiRunCode function instead of a hardcoded axios call
+      const response = await apiRunCode({
+        language,
+        code,
+        input,
+      });
 
       if (response.data.error && response.data.error.trim() !== "") {
         setError(response.data.error);

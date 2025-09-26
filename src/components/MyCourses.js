@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
+// Import the correct function from your api.js file
+import { apiGetMyCourses } from '../services/api'; // (Adjust the path to your api.js file if needed)
+
 
 const MyCourses = () => {
     const [myCourses, setMyCourses] = useState([]);
@@ -10,16 +12,8 @@ const MyCourses = () => {
     useEffect(() => {
         const fetchMyCourses = async () => {
             try {
-                const token = localStorage.getItem('token');
-                if (!token) {
-                    toast.error("You must be logged in.");
-                    setLoading(false);
-                    return;
-                }
-
-                const response = await axios.get('http://localhost:8080/api/registrations/my-courses', {
-                    headers: { 'Authorization': `Bearer ${token}` }
-                });
+                // Use the centralized apiGetMyCourses function
+                const response = await apiGetMyCourses();
                 setMyCourses(response.data);
             } catch (error) {
                 toast.error("Failed to fetch your courses.");
