@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Toaster } from 'react-hot-toast';
 import './App.css';
 
 import { AuthProvider } from "./context/AuthContext";
 import { ThemeProvider } from "./context/ThemeContext";
+// 1. Import the Loading provider and hook
+import { LoadingProvider, useLoading } from "./context/LoadingContext";
+// 2. Import the interceptor setup function
+import { setupInterceptors } from "./services/api";
 
 // Import all your components
 import Navbar from "./components/Navbar";
@@ -20,35 +24,54 @@ import CourseDetail from "./components/CourseDetail";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Layout from "./components/Layout";
 import MyCourses from "./components/MyCourses";
-import CompilerPage from "./components/CompilerPage"; // <-- 1. IMPORT THE NEW COMPONENT
+import CompilerPage from "./components/CompilerPage";
+
+// 3. Create a new component to handle interceptor setup
+// This component must be a child of LoadingProvider to access the context
+const AppContent = () => {
+  const { showLoader, hideLoader } = useLoading();
+
+  useEffect(() => {
+    // Setup the interceptors once the component mounts
+    setupInterceptors(showLoader, hideLoader);
+  }, [showLoader, hideLoader]);
+
+  return (
+    <>
+      <Toaster position="top-center" reverseOrder={false} />
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Welcome />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
+
+        <Route element={<ProtectedRoute />}>
+          <Route path="/dashboard" element={<Layout><Dashboard /></Layout>} />
+          <Route path="/chat" element={<Layout><ChatComponent /></Layout>} />
+          <Route path="/courses" element={<Layout><CourseList /></Layout>} />
+          <Route path="/course/:courseId" element={<Layout><CourseDetail /></Layout>} />
+          <Route path="/my-courses" element={<Layout><MyCourses /></Layout>} />
+          <Route path="/compiler" element={<Layout><CompilerPage /></Layout>} />
+        </Route>
+      </Routes>
+    </>
+  );
+};
+
 
 export default function App() {
   return (
     <BrowserRouter>
-      <ThemeProvider>
-        <AuthProvider>
-          <Toaster position="top-center" reverseOrder={false} />
-          <Navbar />
-          <Routes>
-            {/* All your routes remain the same */}
-            <Route path="/" element={<Welcome />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/reset-password/:token" element={<ResetPassword />} />
-
-            <Route element={<ProtectedRoute />}>
-              <Route path="/dashboard" element={<Layout><Dashboard /></Layout>} />
-              <Route path="/chat" element={<Layout><ChatComponent /></Layout>} />
-              <Route path="/courses" element={<Layout><CourseList /></Layout>} />
-              <Route path="/course/:courseId" element={<Layout><CourseDetail /></Layout>} />
-              <Route path="/my-courses" element={<Layout><MyCourses /></Layout>} />
-              {/* --- 2. ADD THE NEW PROTECTED ROUTE FOR THE COMPILER --- */}
-              <Route path="/compiler" element={<Layout><CompilerPage /></Layout>} />
-            </Route>
-          </Routes>
-        </AuthProvider>
-      </ThemeProvider>
+      {/* 4. Wrap all other providers with the LoadingProvider */}
+      <LoadingProvider>
+        <ThemeProvider>
+          <AuthProvider>
+            <AppContent />
+          </AuthProvider>
+        </ThemeProvider>
+      </LoadingProvider>
     </BrowserRouter>
   );
 }
