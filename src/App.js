@@ -5,9 +5,7 @@ import './App.css';
 
 import { AuthProvider } from "./context/AuthContext";
 import { ThemeProvider } from "./context/ThemeContext";
-// 1. Import the Loading provider and hook
 import { LoadingProvider, useLoading } from "./context/LoadingContext";
-// 2. Import the interceptor setup function
 import { setupInterceptors } from "./services/api";
 
 // Import all your components
@@ -25,19 +23,18 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Layout from "./components/Layout";
 import MyCourses from "./components/MyCourses";
 import CompilerPage from "./components/CompilerPage";
+import LoadingSpinner from "./components/LoadingSpinner"; // <-- 1. IMPORT THE SPINNER
 
-// 3. Create a new component to handle interceptor setup
-// This component must be a child of LoadingProvider to access the context
 const AppContent = () => {
   const { showLoader, hideLoader } = useLoading();
 
   useEffect(() => {
-    // Setup the interceptors once the component mounts
     setupInterceptors(showLoader, hideLoader);
   }, [showLoader, hideLoader]);
 
   return (
     <>
+      <LoadingSpinner /> {/* <-- 2. ADD THE SPINNER HERE */}
       <Toaster position="top-center" reverseOrder={false} />
       <Navbar />
       <Routes>
@@ -64,7 +61,6 @@ const AppContent = () => {
 export default function App() {
   return (
     <BrowserRouter>
-      {/* 4. Wrap all other providers with the LoadingProvider */}
       <LoadingProvider>
         <ThemeProvider>
           <AuthProvider>

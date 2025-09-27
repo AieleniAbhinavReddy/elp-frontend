@@ -1,13 +1,11 @@
 import React from 'react';
-// 1. Import the LoadingSpinner component
-import LoadingSpinner from './LoadingSpinner';
+// The LoadingSpinner import has been removed.
 
 // This component wraps our main application pages
 const Layout = ({ children }) => {
   return (
     <div className="main-app-layout">
-      {/* 2. Add the spinner here. It will only be visible when loading. */}
-      <LoadingSpinner />
+      {/* The LoadingSpinner component has been removed from here. */}
       <div className="container py-5">
         {children}
       </div>
