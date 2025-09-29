@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import ThemeToggle from "./ThemeToggle";
+import logo from '../assets/elp_logo.png';
 
 export default function Navbar() {
   const { isAuthenticated, logout, user } = useAuth();
@@ -15,8 +16,10 @@ export default function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg fixed-top main-navbar">
       <div className="container-fluid">
+
         <Link className="navbar-brand fw-bold fs-4" to={isAuthenticated ? "/dashboard" : "/"}>
-          ModernLearn
+        <img src={logo} alt="DevPath logo" className="navbar-logo"/>
+          DevPath
         </Link>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
           <span className="navbar-toggler-icon"></span>
@@ -34,7 +37,6 @@ export default function Navbar() {
                 <li className="nav-item">
                   <Link className="nav-link" to="/chat">AI Assistant</Link>
                 </li>
-                {/* --- ADDED THIS LINK FOR THE COMPILER --- */}
                 <li className="nav-item">
                   <Link className="nav-link" to="/compiler">Online Compiler</Link>
                 </li>
@@ -54,10 +56,8 @@ export default function Navbar() {
                 <button className="btn btn-outline-primary btn-sm" onClick={handleLogout}>Logout</button>
               </>
             ) : (
-              <>
-                <Link className="btn btn-light btn-sm me-2" to="/login">Log In</Link>
-                <Link className="btn btn-primary btn-sm" to="/signup">Sign Up</Link>
-              </>
+              // The login and signup buttons are now removed
+              null
             )}
           </div>
         </div>
