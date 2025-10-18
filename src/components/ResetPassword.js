@@ -3,7 +3,7 @@ import { toast } from 'react-hot-toast';
 import { useParams, useNavigate } from "react-router-dom";
 import { apiResetPassword } from "../services/api";
 import videoBg from '../assets/background_video.mp4'; // Import video
-import './Welcome.css'; // Import shared styles for the background
+import '../App.css'; // Import shared styles for the background
 
 export default function ResetPassword() {
     const { token } = useParams();

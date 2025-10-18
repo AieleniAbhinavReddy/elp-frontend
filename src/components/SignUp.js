@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import videoBg from '../assets/background_video.mp4'; // Import video
-import './Welcome.css'; // Import shared styles for the background
+import '../App.css'; // Import shared styles for the background
 
 export default function SignUp() {
     const [username, setUsername] = useState("");

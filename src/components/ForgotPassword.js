@@ -3,7 +3,7 @@ import { toast } from 'react-hot-toast';
 import { useNavigate } from "react-router-dom";
 import { apiForgotPassword } from "../services/api";
 import videoBg from '../assets/background_video.mp4'; // Import video
-import './Welcome.css'; // Import shared styles for the background
+import '../App.css'; // Import shared styles for the background
 
 export default function ForgotPassword() {
     const [username, setUsername] = useState("");
