@@ -36,8 +36,7 @@ export default function Navbar() {
     <nav className={navbarClass}>
       <div className="container-fluid">
         <Link className="navbar-brand fw-bold fs-4" to={isAuthenticated ? "/dashboard" : "/"}>
-          <img src={logo} alt="DevPath logo" className="navbar-logo"/>
-          DevPath
+          SkillBase
         </Link>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
           <span className="navbar-toggler-icon"></span>
