@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react"; // Import useState and useEf
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import ThemeToggle from "./ThemeToggle";
-import logo from '../assets/elp_logo.png';
 
 export default function Navbar() {
   const { isAuthenticated, logout, user } = useAuth();
