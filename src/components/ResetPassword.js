@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { toast } from 'react-hot-toast';
 import { useParams, useNavigate } from "react-router-dom";
 import { apiResetPassword } from "../services/api";
+import videoBg from '../assets/background_video.mp4'; // Import video
+import './Welcome.css'; // Import shared styles for the background
 
 export default function ResetPassword() {
     const { token } = useParams();
@@ -33,24 +35,28 @@ export default function ResetPassword() {
     };
 
     return (
-        // --- CHANGE HERE: Use the 'auth-bg' class for the background ---
-        <div className="auth-bg">
-            <div className="card shadow-lg p-4 p-md-5 auth-card border-0">
-                <div className="card-body">
-                    <h2 className="text-center fw-bold text-success mb-4">Reset Password</h2>
-                    <form onSubmit={handleSubmit}>
-                        <div className="mb-3">
-                           <input type="password" placeholder="New password" className="form-control form-control-lg rounded-pill" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required />
-                        </div>
-                        <div className="mb-3">
-                           <input type="password" placeholder="Confirm password" className="form-control form-control-lg rounded-pill" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
-                        </div>
-                        <div className="d-grid">
-                            <button type="submit" className="btn btn-success btn-lg rounded-pill shadow" disabled={loading}>
-                                {loading ? 'Resetting...' : 'Reset Password'}
-                            </button>
-                        </div>
-                    </form>
+        <div className="welcome-container">
+            <video autoPlay loop muted className="background-video">
+                <source src={videoBg} type="video/mp4" />
+            </video>
+            <div className="content-overlay">
+                <div className="card glass-card p-4 p-md-5 border-0" style={{ maxWidth: '500px', width: '100%' }}>
+                    <div className="card-body">
+                        <h2 className="text-center fw-bold mb-4">Reset Password</h2>
+                        <form onSubmit={handleSubmit}>
+                            <div className="mb-3">
+                               <input type="password" placeholder="New password" className="form-control form-control-lg" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required />
+                            </div>
+                            <div className="mb-3">
+                               <input type="password" placeholder="Confirm password" className="form-control form-control-lg" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
+                            </div>
+                            <div className="d-grid">
+                                <button type="submit" className="btn btn-primary btn-lg shadow" disabled={loading}>
+                                    {loading ? 'Resetting...' : 'Reset Password'}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

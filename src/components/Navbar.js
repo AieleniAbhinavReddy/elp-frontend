@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react"; // Import useState and useEffect
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import ThemeToggle from "./ThemeToggle";
@@ -7,18 +7,36 @@ import logo from '../assets/elp_logo.png';
 export default function Navbar() {
   const { isAuthenticated, logout, user } = useAuth();
   const navigate = useNavigate();
+  const [isScrolled, setIsScrolled] = useState(false); // State to track scroll
+
+  // Effect to add and remove the scroll event listener
+  useEffect(() => {
+    const handleScroll = () => {
+      // Set state to true if page is scrolled more than 10px, else false
+      setIsScrolled(window.scrollY > 10);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    // Cleanup function to remove the listener when the component unmounts
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []); // Empty dependency array means this effect runs only once on mount
 
   const handleLogout = () => {
     logout();
     navigate("/login");
   };
 
-  return (
-    <nav className="navbar navbar-expand-lg fixed-top main-navbar">
-      <div className="container-fluid">
+  // Conditionally add the 'scrolled' class to the navbar
+  const navbarClass = `navbar navbar-expand-lg fixed-top main-navbar ${isScrolled ? 'scrolled' : ''}`;
 
+  return (
+    <nav className={navbarClass}>
+      <div className="container-fluid">
         <Link className="navbar-brand fw-bold fs-4" to={isAuthenticated ? "/dashboard" : "/"}>
-        <img src={logo} alt="DevPath logo" className="navbar-logo"/>
+          <img src={logo} alt="DevPath logo" className="navbar-logo"/>
           DevPath
         </Link>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
@@ -56,7 +74,6 @@ export default function Navbar() {
                 <button className="btn btn-outline-primary btn-sm" onClick={handleLogout}>Logout</button>
               </>
             ) : (
-              // The login and signup buttons are now removed
               null
             )}
           </div>

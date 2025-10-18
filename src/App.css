@@ -1,34 +1,34 @@
 /* --- Global Theme Variables --- */
 :root {
-  --primary-blue: #007bff;
-  --accent-green: #28a745;
-  --light-bg: #f8f9fa;
+  /* REFINED: A more professional and modern color palette */
+  --primary-blue: #0052cc;
+  --accent-green: #00875a;
+  --light-bg: #f7f8fc; /* A slightly softer white */
   --card-bg: #ffffff;
-  --dark-text: #212529;
-  --light-text: #6c757d;
-  --border-color: #dee2e6;
-  --card-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.07);
+  --dark-text: #172b4d; /* Softer than pure black */
+  --light-text: #6b778c;
+  --border-color: #dfe1e6;
+  --card-shadow: 0 4px 8px rgba(23, 43, 77, 0.07);
   --border-radius: 0.75rem;
-  --primary-gradient: linear-gradient(45deg, #007bff, #0056b3);
+  --primary-gradient: linear-gradient(45deg, #0052cc, #0065ff);
 }
 
 /* --- DARK MODE THEME --- */
 html[data-theme='dark'] {
-  --primary-blue: #0d6efd;
-  --accent-green: #198754;
-  --light-bg: #000000;
-  --card-bg: #1c1c1e;
-  --dark-text: #ffffff;
-  --light-text: #a0a0a0;
-  --border-color: #343a40;
-  --card-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
+  --primary-blue: #4c9aff;
+  --accent-green: #36b37e;
+  /* UPDATED: A deep navy/charcoal is more professional than pure black */
+  --light-bg: #0e121b;
+  --card-bg: #161b25;
+  --dark-text: #c1c7d0;
+  --light-text: #8993a4;
+  --border-color: #2c333f;
+  --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 /* --- START: Import Syntax Highlighting Themes --- */
-/* Light mode theme from highlight.js */
 @import 'highlight.js/styles/github.css';
 
-/* In dark mode, we'll override it with the dark theme */
 html[data-theme='dark'] {
   @import 'highlight.js/styles/github-dark.css';
 }
@@ -43,29 +43,35 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* --- Animated Gradient Background (Auth Pages ONLY) --- */
-.auth-bg {
-  background: linear-gradient(-45deg, #007bff, #28a745, #dc3545, #ffc107);
-  background-size: 400% 400%;
-  animation: auth-gradient 15s ease infinite;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
+/* --- REMOVED: The old distracting gradient animation --- */
+/* The .auth-bg class is now removed and will be replaced by a video background in the components */
+
+
+/* --- NEW: Subtle Glow Effect for Main App Background --- */
+/* This adds a professional, modern touch to the background */
+.main-app-layout::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 400px;
+  background: radial-gradient(circle, rgba(0, 82, 204, 0.06), transparent 70%);
+  z-index: -1;
+  opacity: 0.5;
+}
+html[data-theme='dark'] .main-app-layout::before {
+   background: radial-gradient(circle, rgba(76, 154, 255, 0.1), transparent 70%);
 }
 
-@keyframes auth-gradient {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
 
 /* --- Main Application Layout --- */
 .main-app-layout {
   background-color: var(--light-bg);
-  min-height: calc(100vh - 78px);
-  margin-top: 78px;
+  min-height: calc(100vh - 70px); /* Adjusted for new navbar height */
+  margin-top: 70px;
+  position: relative; /* Needed for the ::before pseudo-element */
+  z-index: 1;
 }
 
 /* --- Global Component Styles --- */
@@ -74,13 +80,15 @@ body {
   border-radius: var(--border-radius);
   box-shadow: var(--card-shadow);
   background-color: var(--card-bg);
-  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 1rem 1.5rem rgba(0, 0, 0, 0.12);
+  box-shadow: 0 8px 16px rgba(23, 43, 77, 0.1);
+  border-color: var(--primary-blue); /* Add a highlight on hover */
 }
+
 
 /* --- Button Styles --- */
 .btn {
@@ -90,223 +98,129 @@ body {
   transition: all 0.3s ease;
 }
 
-/* --- Dynamic Aurora Navbar Styles --- */
+.btn-primary:hover {
+    box-shadow: 0 4px 12px rgba(0, 82, 204, 0.3);
+    transform: translateY(-2px);
+}
+
+
+/* --- NEW: Professional Navbar Styles --- */
+/* The navbar is now transparent and blurs the content behind it */
 .main-navbar {
-    background: linear-gradient(270deg, #0056b3, #28a745, #0d6efd, #0056b3);
-    background-size: 600% 600%;
-    animation: navbar-aurora 16s ease infinite;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    background-color: transparent;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); /* For Safari */
+    transition: background-color 0.4s ease, box-shadow 0.4s ease;
+    padding: 10px 0; /* Adjust padding */
+    height: 70px;
+}
+/* This class will be added via JS on scroll */
+.main-navbar.scrolled {
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+html[data-theme='dark'] .main-navbar.scrolled {
+    background-color: rgba(22, 27, 37, 0.8);
 }
 
-@keyframes navbar-aurora {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
+/* Navbar text needs to be dark now on light theme */
 .main-navbar .nav-link,
 .main-navbar .navbar-text,
 .main-navbar .navbar-brand {
-    color: white !important;
+    color: var(--dark-text) !important;
     font-weight: 600 !important;
-    text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    text-shadow: none; /* Removed old shadow */
+}
+/* But in dark mode, it should be light */
+html[data-theme='dark'] .main-navbar .nav-link,
+html[data-theme='dark'] .main-navbar .navbar-text,
+html[data-theme='dark'] .main-navbar .navbar-brand {
+    color: var(--dark-text) !important;
 }
 
-.main-navbar .btn-outline-primary,
-.main-navbar .btn-outline-secondary {
-    color: white;
-    border-color: rgba(255, 255, 255, 0.75);
-    font-weight: 600;
-}
-.main-navbar .btn-outline-primary:hover,
-.main-navbar .btn-outline-secondary:hover {
-    background-color: rgba(255, 255, 255, 0.15);
-    border-color: white;
-}
-
-/* --- Page Title Style --- */
-.page-title {
-    background: var(--primary-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-weight: 700 !important;
-}
-
-/* --- Dark Mode Contrast Fixes --- */
-html[data-theme='dark'] .page-title,
-html[data-theme='dark'] .card h1,
-html[data-theme='dark'] .card h2,
-html[data-theme='dark'] .card h3,
-html[data-theme='dark'] .card h4,
-html[data-theme='dark'] .card h5 {
-    color: var(--dark-text);
-    -webkit-text-fill-color: initial;
-    background: none;
-}
-html[data-theme='dark'] .card p,
-html[data-theme='dark'] .text-muted,
-html[data-theme='dark'] .card-text {
-    color: var(--light-text) !important;
-}
-
-/* --- Hero Section for Dashboard --- */
-.dashboard-hero {
-  background: var(--primary-gradient);
-  color: white;
-  padding: 4rem;
-  border-radius: var(--border-radius);
-  text-align: center;
-  margin-bottom: 3rem;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.dashboard-hero:hover {
-    transform: scale(1.02);
-    box-shadow: 0 1rem 2rem rgba(0, 123, 255, 0.3);
-}
-.dashboard-hero .text-muted {
-    color: rgba(255, 255, 255, 0.8) !important;
-}
-
-/* --- START: CHAT UI STYLES --- */
-.chat-container {
-    display: flex;
-    flex-direction: column;
-    height: calc(100vh - 120px);
-    background-color: var(--card-bg);
-    border-radius: var(--border-radius);
-    box-shadow: var(--card-shadow);
-    overflow: hidden;
-}
-
-.chat-header {
-    background: var(--primary-gradient);
-    color: white;
-    padding: 1rem;
-    text-align: center;
-    font-weight: 600;
-}
-
-.chat-messages {
-    flex-grow: 1;
-    overflow-y: auto;
-    padding: 1.5rem;
-}
-
-.message-row {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-}
-
-.message-row.user { justify-content: flex-end; }
-.message-row.ai { justify-content: flex-start; }
-
-.avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    flex-shrink: 0;
-}
-
-.user .avatar {
-    background-color: var(--primary-blue);
-    color: white;
-}
-
-.ai .avatar {
-    background-color: var(--light-text);
-    color: var(--card-bg);
-}
-
-.message-content { max-width: 70%; }
-.user .message-sender { text-align: right; }
-
-.message-sender {
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--light-text);
-    margin-bottom: 0.25rem;
-}
-
-.message-bubble {
-    padding: 0.75rem 1rem;
-    border-radius: var(--border-radius);
-    border: 1px solid var(--border-color);
-    line-height: 1.5;
-    word-wrap: break-word;
-}
-
-.user .message-bubble {
-    background-color: var(--primary-blue);
-    color: white;
-    border-radius: 1.25rem 0.25rem 1.25rem 1.25rem;
-    border-color: transparent;
-}
-
-.ai .message-bubble {
-    background-color: var(--light-bg);
-    border-radius: 0.25rem 1.25rem 1.25rem 1.25rem;
-}
-
-.chat-input-area {
-    padding: 1rem;
-    border-top: 1px solid var(--border-color);
-    background-color: var(--card-bg);
-}
-
-.chat-input-area .form-control {
-    border-radius: 50px;
-    border-color: var(--border-color);
-    background-color: var(--light-bg);
-    color: var(--dark-text);
-}
-.chat-input-area .form-control:focus {
-    box-shadow: 0 0 0 0.25rem rgba(var(--primary-blue), 0.25);
+/* Adjust button colors */
+.main-navbar .btn {
     border-color: var(--primary-blue);
+    color: var(--primary-blue);
 }
-/* --- END: CHAT UI STYLES --- */
-
-
-/* --- START: CODE BLOCK & SYNTAX HIGHLIGHTING STYLES --- */
-.message-bubble pre {
-    /* This is the container for the code block */
-    border-radius: 0.5rem; /* Slightly smaller radius */
-    padding: 1rem;
-    border: 1px solid var(--border-color);
-    margin: 0.5rem 0 0 0; /* Add some space if there's text before the code */
+.main-navbar .btn:hover {
+    background-color: var(--primary-blue);
+    color: white;
 }
-
-/* The code tag inside the pre tag */
-.message-bubble pre code.hljs {
-    background: transparent; /* Make it inherit the pre's background */
-    padding: 0;
+html[data-theme='dark'] .main-navbar .btn {
+     color: var(--primary-blue);
+     border-color: var(--primary-blue);
+}
+html[data-theme='dark'] .main-navbar .btn:hover {
+     background-color: var(--primary-blue);
+     color: var(--card-bg);
 }
 
-/* --- Global Loading Spinner Styles --- */
-.spinner-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999; /* Ensures it's on top of everything */
+
+/* --- NEW: Glassmorphism Card for Auth Forms --- */
+/* This makes the login/signup cards look modern over the video background */
+.glass-card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 1rem;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
 }
 
-.navbar-brand {
+html[data-theme='dark'] .glass-card {
+    background: rgba(15, 20, 30, 0.5);
+}
+
+/* Text inside the glass card needs to be visible */
+.glass-card, .glass-card h2, .glass-card .form-label {
+    color: white !important;
+}
+.glass-card .text-muted, .glass-card a {
+    color: #e0e0e0 !important;
+}
+.glass-card .form-control {
+    background-color: rgba(0,0,0,0.2);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: white;
+}
+.glass-card .form-control::placeholder {
+    color: #cccccc;
+}
+
+/* Other styles like Page Title, Chat, Dashboard Hero largely inherit well from the root changes */
+/* The existing styles for these components are fine and will adapt to the new variables. */
+
+.welcome-container {
+  position: fixed; /* Use fixed to cover the whole viewport */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden; /* Hide anything that spills out */
+  z-index: -10; /* Put it behind everything */
+}
+
+.background-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* This makes the video cover the screen without stretching */
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.content-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(10, 20, 40, 0.6); /* Dark blue overlay */
   display: flex;
-  align-items: center; /* This vertically aligns the logo and text */
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  color: white;
 }
-
-.navbar-logo {
-  height: 40px; /* Adjust size as needed */
-  margin-right: 10px; /* Adds space between logo and text */
-}
-/* --- END: CODE BLOCK & SYNTAX HIGHLIGHTING STYLES --- */
