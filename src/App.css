@@ -43,12 +43,7 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* --- REMOVED: The old distracting gradient animation --- */
-/* The .auth-bg class is now removed and will be replaced by a video background in the components */
-
-
 /* --- NEW: Subtle Glow Effect for Main App Background --- */
-/* This adds a professional, modern touch to the background */
 .main-app-layout::before {
   content: '';
   position: absolute;
@@ -104,23 +99,22 @@ html[data-theme='dark'] .main-app-layout::before {
 }
 
 
-/* --- NEW: Professional Navbar Styles --- */
-/* The navbar is now transparent and blurs the content behind it */
+/* --- UPDATED: Professional Navbar Styles --- */
 .main-navbar {
     background-color: transparent;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px); /* For Safari */
-    transition: background-color 0.4s ease, box-shadow 0.4s ease;
-    padding: 10px 0; /* Adjust padding */
+    transition: background-color 0.4s ease, box-shadow 0.4s ease, border-bottom 0.4s ease;
+    padding: 10px 0;
     height: 70px;
 }
 /* This class will be added via JS on scroll */
 .main-navbar.scrolled {
-    background-color: rgba(255, 255, 255, 0.8);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-html[data-theme='dark'] .main-navbar.scrolled {
-    background-color: rgba(22, 27, 37, 0.8);
+    /* CHANGED: Switched to an opaque background for better separation */
+    background-color: var(--card-bg); 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    /* ADDED: A subtle border for a sharp, clean edge */
+    border-bottom: 1px solid var(--border-color);
 }
 
 /* Navbar text needs to be dark now on light theme */
@@ -157,8 +151,7 @@ html[data-theme='dark'] .main-navbar .btn:hover {
 }
 
 
-/* --- NEW: Glassmorphism Card for Auth Forms --- */
-/* This makes the login/signup cards look modern over the video background */
+/* --- Glassmorphism Card for Auth Forms --- */
 .glass-card {
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(20px);
@@ -168,10 +161,14 @@ html[data-theme='dark'] .main-navbar .btn:hover {
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
 }
 
+/* ADDED: This ensures all text and titles inside the auth cards are centered. */
+.glass-card .card-body {
+    text-align: center;
+}
+
 html[data-theme='dark'] .glass-card {
     background: rgba(15, 20, 30, 0.5);
 }
-
 /* Text inside the glass card needs to be visible */
 .glass-card, .glass-card h2, .glass-card .form-label {
     color: white !important;
@@ -183,28 +180,44 @@ html[data-theme='dark'] .glass-card {
     background-color: rgba(0,0,0,0.2);
     border: 1px solid rgba(255,255,255,0.3);
     color: white;
+    /* ADDED: Keep text inside input fields left-aligned for readability */
+    text-align: left; 
 }
 .glass-card .form-control::placeholder {
     color: #cccccc;
 }
 
-/* Other styles like Page Title, Chat, Dashboard Hero largely inherit well from the root changes */
-/* The existing styles for these components are fine and will adapt to the new variables. */
+/* --- Dashboard Centering Container --- */
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+}
+.dashboard-container .dashboard-hero,
+.dashboard-container .row {
+    width: 100%;
+    max-width: 960px; /* Set a max-width for larger screens */
+}
 
+
+/* --- Welcome/Auth Page Background Container --- */
 .welcome-container {
-  position: fixed; /* Use fixed to cover the whole viewport */
+  position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  overflow: hidden; /* Hide anything that spills out */
-  z-index: -10; /* Put it behind everything */
+  overflow: hidden;
+  z-index: 10; /* Ensure it covers the main app layout */
 }
 
-.background-video {
+.background-video, .background-image {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* This makes the video cover the screen without stretching */
+  object-fit: cover;
   position: absolute;
   top: 0;
   left: 0;
@@ -217,10 +230,27 @@ html[data-theme='dark'] .glass-card {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(10, 20, 40, 0.6); /* Dark blue overlay */
+  background-color: rgba(10, 20, 40, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 2;
   color: white;
 }
+
+/* --- Global Loading Spinner Styles --- */
+.spinner-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    /* These three lines correctly center the spinner on the entire page */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; 
+}
+
+/* Other existing component styles like chat, hero, etc. will inherit correctly */
