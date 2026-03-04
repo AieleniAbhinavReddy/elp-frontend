@@ -27,7 +27,7 @@ export default function Dashboard() {
         <div className="dashboard-container">
             <div className="dashboard-hero">
                 <h1 className="display-4 fw-bold mb-3">Welcome back, {user.firstName}!</h1>
-                <p className="lead fs-5" style={{ color: 'rgba(0, 0, 255, 1)' }}>
+                <p className="lead fs-5 dashboard-subtitle">
                     Your learning journey continues here. What would you like to do next?
                 </p>
                 <p className="mb-0 text-muted">You are enrolled in {myCoursesCount} course{myCoursesCount === 1 ? '' : 's'}.</p>
@@ -47,10 +47,10 @@ export default function Dashboard() {
                 <div className="col-md-5">
                     <div className="card h-100 text-center">
                         <div className="card-body p-5">
-                            <i className="bi bi-chat-dots-fill fs-1" style={{ color: 'var(--accent-green)' }}></i>
+                            <i className="bi bi-chat-dots-fill fs-1 text-success"></i>
                             <h3 className="card-title fw-bold">AI Assistant</h3>
                             <p className="text-muted">Have a question? Get instant help from our AI tutor.</p>
-                            <Link to="/chat" className="btn btn-success mt-3" style={{backgroundColor: 'var(--accent-green)', borderColor: 'var(--accent-green)'}}>
+                            <Link to="/chat" className="btn btn-success mt-3">
                                 Start Chat
                             </Link>
                         </div>

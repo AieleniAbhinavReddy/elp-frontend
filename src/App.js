@@ -6,7 +6,7 @@ import './App.css';
 import { AuthProvider } from "./context/AuthContext";
 import { ThemeProvider } from "./context/ThemeContext";
 import { LoadingProvider, useLoading } from "./context/LoadingContext";
-import { setupInterceptors } from "./services/api";
+import { setupInterceptors, initializeApiBase } from "./services/api";
 
 // Import all your components
 import Navbar from "./components/Navbar";
@@ -29,7 +29,11 @@ const AppContent = () => {
   const { showLoader, hideLoader } = useLoading();
 
   useEffect(() => {
-    setupInterceptors(showLoader, hideLoader);
+    // Initialize API base URL first (checks localhost availability)
+    initializeApiBase().then(() => {
+      // Then setup interceptors
+      setupInterceptors(showLoader, hideLoader);
+    });
   }, [showLoader, hideLoader]);
 
   return (

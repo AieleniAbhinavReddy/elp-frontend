@@ -1,7 +1,8 @@
 import axios from 'axios';
 
-const DEFAULT_API_BASE = 'https://elp-backend-production.up.railway.app';
-const API_BASE_URL = (process.env.REACT_APP_API_URL || DEFAULT_API_BASE).replace(/\/+$/, '');
+const LOCALHOST_API_BASE = 'http://localhost:8080';
+const RAILWAY_API_BASE = 'https://elp-backend-production.up.railway.app';
+let API_BASE_URL = RAILWAY_API_BASE; // Default to Railway, can be updated during init
 
 // 1. Create a central apiClient instance with baseURL from env or fallback
 const apiClient = axios.create({
@@ -11,6 +12,38 @@ const apiClient = axios.create({
         'Content-Type': 'application/json'
     }
 });
+
+// Function to check if localhost backend is available
+const checkLocalhostAvailability = async () => {
+    try {
+        // Try to reach localhost with a very short timeout (1 second)
+        await axios.get(`${LOCALHOST_API_BASE}/api/courses`, {
+            timeout: 1000 // 1 second timeout for health check
+        });
+        console.log('✅ Localhost backend detected. Using local development server.');
+        return true;
+    } catch (error) {
+        console.log('⚠️ Localhost backend not available. Falling back to Railway production server.');
+        return false;
+    }
+};
+
+// Initialize API base URL (call this from App.js on startup)
+export const initializeApiBase = async () => {
+    const isLocalhost = await checkLocalhostAvailability();
+    
+    if (isLocalhost) {
+        API_BASE_URL = LOCALHOST_API_BASE;
+    } else {
+        API_BASE_URL = RAILWAY_API_BASE;
+    }
+    
+    // Update the apiClient's baseURL
+    apiClient.defaults.baseURL = API_BASE_URL;
+    
+    console.log(`🔗 API Base URL: ${API_BASE_URL}`);
+    return API_BASE_URL;
+};
 
 export const getStoredAuthToken = () => {
     return localStorage.getItem('token') || sessionStorage.getItem('token');
