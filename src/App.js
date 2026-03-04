@@ -23,6 +23,8 @@ import Layout from "./components/Layout";
 import MyCourses from "./components/MyCourses";
 import CompilerPage from "./components/CompilerPage";
 import LessonContent from "./components/LessonContent";
+import DsaPracticeHome from "./components/DsaPracticeHome";
+import DsaSheetDetail from "./components/DsaSheetDetail";
 import LoadingSpinner from "./components/LoadingSpinner"; // <-- 1. IMPORT THE SPINNER
 
 const AppContent = () => {
@@ -47,6 +49,10 @@ const AppContent = () => {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
+
+        {/* DSA routes - public (auth optional, enhanced if logged in) */}
+        <Route path="/dsa" element={<Layout><DsaPracticeHome /></Layout>} />
+        <Route path="/dsa/sheets/:sheetId" element={<Layout><DsaSheetDetail /></Layout>} />
 
         <Route element={<ProtectedRoute />}>
           <Route path="/dashboard" element={<Layout><Dashboard /></Layout>} />

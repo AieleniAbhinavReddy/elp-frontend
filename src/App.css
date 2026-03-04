@@ -482,3 +482,299 @@ body {
         border-radius: 14px;
     }
 }
+
+/* =======================================================
+   DSA CODING PRACTICE SECTION
+   ======================================================= */
+
+/* ── DSA Hero ── */
+.dsa-hero {
+    background: linear-gradient(140deg, #0f172a 0%, #1e293b 55%, #7c3aed 100%);
+    color: #fff;
+    border-radius: 24px;
+    padding: 2.25rem 2rem;
+    margin-bottom: 1.75rem;
+    box-shadow: var(--shadow-lg);
+}
+
+.dsa-hero-subtitle {
+    color: #cbd5e1 !important;
+}
+
+/* ── Overall Progress Card ── */
+.dsa-overall-progress {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 0.5rem;
+    box-shadow: var(--shadow-sm);
+}
+
+/* ── Sheet Cards ── */
+.dsa-sheet-card {
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.dsa-sheet-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+}
+
+.dsa-sheet-card-accent {
+    height: 8px;
+    width: 100%;
+}
+
+.dsa-sheet-icon {
+    display: none;
+}
+
+/* ── Sheet Detail Header ── */
+.dsa-sheet-header {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+    box-shadow: var(--shadow-sm);
+}
+
+/* ── Video Player ── */
+.dsa-video-player {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+    margin-bottom: 1.25rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.dsa-video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+}
+
+.dsa-video-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: var(--radius-md);
+}
+
+/* ── Filters ── */
+.dsa-filters {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.25rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.dsa-filters .form-control,
+.dsa-filters .form-select {
+    border-radius: 10px;
+    font-size: 0.9rem;
+}
+
+/* ── Problem List ── */
+.dsa-problem-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.dsa-problem-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.85rem 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-bottom: none;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.dsa-problem-row:first-child {
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.dsa-problem-row:last-child {
+    border-bottom: 1px solid var(--border);
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+}
+
+.dsa-problem-row:only-child {
+    border-radius: var(--radius-lg);
+    border-bottom: 1px solid var(--border);
+}
+
+.dsa-problem-row:hover {
+    background: var(--surface-2);
+    border-color: color-mix(in srgb, var(--primary) 25%, var(--border));
+}
+
+.dsa-problem-row:hover + .dsa-problem-row {
+    border-top-color: color-mix(in srgb, var(--primary) 25%, var(--border));
+}
+
+.dsa-problem-solved {
+    background: color-mix(in srgb, var(--success) 5%, var(--surface));
+}
+
+.dsa-problem-solved:hover {
+    background: color-mix(in srgb, var(--success) 10%, var(--surface));
+}
+
+/* ── Problem Row Items ── */
+.dsa-problem-order {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--muted);
+    background: var(--surface-2);
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+.dsa-problem-solved .dsa-problem-order {
+    background: color-mix(in srgb, var(--success) 15%, var(--surface));
+}
+
+.dsa-problem-thumb {
+    width: 100px;
+    height: 56px;
+    border-radius: 8px;
+    overflow: hidden;
+    flex-shrink: 0;
+    position: relative;
+    cursor: pointer;
+    border: 1px solid var(--border);
+}
+
+.dsa-problem-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.2s ease;
+}
+
+.dsa-problem-thumb:hover img {
+    transform: scale(1.08);
+}
+
+.dsa-thumb-play {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.35);
+    color: #fff;
+    font-size: 1.4rem;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.dsa-problem-thumb:hover .dsa-thumb-play {
+    opacity: 1;
+}
+
+.dsa-problem-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.dsa-problem-info h6 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 0.25rem;
+    color: var(--text);
+}
+
+.dsa-platform-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.15rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+}
+
+.dsa-problem-actions {
+    display: flex;
+    gap: 0.4rem;
+    flex-shrink: 0;
+}
+
+.dsa-problem-actions .btn {
+    font-size: 0.8rem;
+    padding: 0.3rem 0.55rem;
+    border-radius: 8px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    .dsa-hero {
+        padding: 1.5rem;
+        border-radius: 16px;
+    }
+
+    .dsa-problem-row {
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        padding: 0.75rem 1rem;
+    }
+
+    .dsa-problem-thumb {
+        width: 80px;
+        height: 45px;
+    }
+
+    .dsa-problem-info {
+        flex-basis: calc(100% - 130px);
+    }
+
+    .dsa-problem-info h6 {
+        white-space: normal;
+        font-size: 0.88rem;
+    }
+
+    .dsa-problem-actions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+}
+
+@media (max-width: 576px) {
+    .dsa-problem-order {
+        display: none;
+    }
+
+    .dsa-problem-thumb {
+        width: 60px;
+        height: 34px;
+    }
+
+    .dsa-problem-info {
+        flex-basis: calc(100% - 76px);
+    }
+
+    .dsa-problem-actions .btn span {
+        display: none !important;
+    }
+}

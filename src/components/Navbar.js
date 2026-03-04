@@ -56,6 +56,9 @@ export default function Navbar() {
                 <li className="nav-item">
                   <Link className="nav-link" to="/compiler">Online Compiler</Link>
                 </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/dsa">DSA Practice</Link>
+                </li>
               </>
             )}
           </ul>

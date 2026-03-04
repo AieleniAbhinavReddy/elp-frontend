@@ -66,6 +66,16 @@ export default function Dashboard() {
                         </div>
                     </div>
                 </div>
+                <div className="col-md-5">
+                    <div className="card h-100 text-center">
+                        <div className="card-body p-5">
+                            <i className="bi bi-braces fs-1 mb-3" style={{ color: '#7c3aed' }}></i>
+                            <h3 className="card-title fw-bold">DSA Practice</h3>
+                            <p className="text-muted">Sharpen your DSA skills with curated problem sheets and video solutions.</p>
+                            <Link to="/dsa" className="btn btn-outline-primary mt-3">Start Practicing</Link>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     );
