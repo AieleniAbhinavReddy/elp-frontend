@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const LOCALHOST_API_BASE = 'http://localhost:8080';
-const RAILWAY_API_BASE = 'https://elp-backend-production.up.railway.app';
-let API_BASE_URL = RAILWAY_API_BASE; // Default to Railway, can be updated during init
+const RENDER_API_BASE = 'https://elp-backend.onrender.com';
+let API_BASE_URL = RENDER_API_BASE; // Default to Render, can be updated during init
 
 // 1. Create a central apiClient instance with baseURL from env or fallback
 const apiClient = axios.create({
@@ -23,7 +23,7 @@ const checkLocalhostAvailability = async () => {
         console.log('✅ Localhost backend detected. Using local development server.');
         return true;
     } catch (error) {
-        console.log('⚠️ Localhost backend not available. Falling back to Railway production server.');
+        console.log('⚠️ Localhost backend not available. Falling back to Render production server.');
         return false;
     }
 };
@@ -35,7 +35,7 @@ export const initializeApiBase = async () => {
     if (isLocalhost) {
         API_BASE_URL = LOCALHOST_API_BASE;
     } else {
-        API_BASE_URL = RAILWAY_API_BASE;
+        API_BASE_URL = RENDER_API_BASE;
     }
     
     // Update the apiClient's baseURL
